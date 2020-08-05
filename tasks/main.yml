@@ -1,0 +1,49 @@
+- name: Include distribution specific variables
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_version }}.yml"
+        - "{{ ansible_facts.os_family }}-{{ ansible_facts.distribution_major_version }}.yml"
+        - "{{ ansible_facts.distribution }}.yml"
+        - "{{ ansible_facts.os_family }}.yml"
+        - default.yml
+      paths:
+        - vars
+  tags:
+    - sudo
+
+- include_tasks: "install-{{ ansible_facts.os_family }}.yml"
+  tags:
+    - sudo
+
+- name: Configure sudoers file
+  lineinfile:
+    dest: "{{ sudo_sudoers_path }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    validate: visudo -cf %s
+  loop: "{{ sudo_sudoers_lines }}"
+  tags:
+    - sudoers
+
+- name: Make sure {{ sudo_sudoers_d_path }} exists
+  file:
+    state: directory
+    path: "{{ sudo_sudoers_d_path }}"
+    owner: "{{ sudo_owner }}"
+    group: "{{ _sudo_group | default(sudo_group) }}"
+    mode: '0750'
+  tags:
+    - sudo
+
+- name: Copy sudoers template
+  template:
+    src: ansible-sudoers.j2
+    dest: "{{ sudo_sudoers_d_path }}/ansible"
+    owner: "{{ sudo_owner }}"
+    group: "{{ _sudo_group | default(sudo_group) }}"
+    mode: '0440'
+    validate: /usr/sbin/visudo -cf %s
+  tags:
+    - sudo

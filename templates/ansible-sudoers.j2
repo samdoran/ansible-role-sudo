@@ -1,0 +1,6 @@
+{% for user in sudo_users %}
+{{ user.name }} {{ user.options | default(sudo_default_options) }}
+{% endfor %}
+{% for group in sudo_groups %}
+%{{ group.name }} {{ group.options | default(sudo_default_options) }}
+{% endfor %}

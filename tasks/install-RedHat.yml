@@ -1,0 +1,6 @@
+- name: RHEL | Install sudo package
+  yum:
+    name: "{{ sudo_package_name }}"
+    state: present
+  tags:
+    - sudo

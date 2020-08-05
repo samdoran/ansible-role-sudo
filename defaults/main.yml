@@ -1,0 +1,16 @@
+sudo_package_name: sudo
+sudo_owner: root
+sudo_group: root
+sudo_default_options: 'ALL=(ALL) NOPASSWD: ALL'
+sudo_sudoers_path: /etc/sudoers
+sudo_sudoers_d_path: /etc/sudoers.d
+
+sudo_sudoers_lines:
+  # Do not require a TTY, which allows Ansible to use ssh pipelining for
+  # improved performance
+  - regexp: '^#?Defaults.*requiretty'
+    line: 'Defaults    !requiretty'
+
+  # Read files from sudoers.d
+  - regexp: '^#includedir.*'
+    line: '#includedir {{ sudo_sudoers_d_path }}'

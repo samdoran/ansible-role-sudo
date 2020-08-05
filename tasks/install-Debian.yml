@@ -1,0 +1,7 @@
+- name: DEBIAN | Install sudo package
+  apt:
+    name: "{{ sudo_package_name }}"
+    state: present
+    update_cache: yes
+  tags:
+    - sudo

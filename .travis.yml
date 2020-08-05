@@ -1,0 +1,34 @@
+language: python
+services: docker
+
+env:
+  global:
+    - ROLE_NAME: sudo
+  matrix:
+    - MOLECULE_DISTRIBUTION: centos6
+    - MOLECULE_DISTRIBUTION: centos7
+    - MOLECULE_DISTRIBUTION: centos8
+    - MOLECULE_DISTRIBUTION: ubuntu16
+    - MOLECULE_DISTRIBUTION: ubuntu18
+    - MOLECULE_DISTRIBUTION: ubuntu20
+    - MOLECULE_DISTRIBUTION: debian8
+    - MOLECULE_DISTRIBUTION: debian9
+    - MOLECULE_DISTRIBUTION: debian10
+    - MOLECULE_DISTRIBUTION: fedora30
+    - MOLECULE_DISTRIBUTION: fedora31
+
+install:
+  - pip install molecule[lint] docker
+
+before_script:
+  # Remove "ansible-role-" prefix from role name
+  - cd ../
+  - mv ansible-role-${ROLE_NAME/_/-} $ROLE_NAME
+  - cd $ROLE_NAME
+
+script:
+  # Run tests
+  - molecule test --all
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
