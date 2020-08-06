@@ -1,9 +1,9 @@
-Sudo
+sudo
 =========
 [![Galaxy](https://img.shields.io/badge/galaxy-samdoran.sudo-blue.svg?style=flat)](https://galaxy.ansible.com/samdoran/sudo)
 [![Build Status](https://travis-ci.com/samdoran/ansible-role-sudo.svg?branch=master)](https://travis-ci.com/samdoran/ansible-role-sudo)
 
-Setup basic `sudo` configuration to allow passwordless `sudo` and not requer a TTY. This is mainly needed on new hosts to get them in a state to be mananged by Ansible.
+Setup basic `sudo` configuration to allow passwordless `sudo` and not require a TTY. This is mainly needed on new hosts to get them in a state to be managed by Ansible.
 
 Requirements
 ------------

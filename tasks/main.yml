@@ -21,7 +21,7 @@
   group:
     name: "{{ item.name }}"
     state: present
-  loop: "{{ sudoers_groups }}"
+  loop: "{{ sudo_groups }}"
 
 - name: Configure sudoers file
   lineinfile:
