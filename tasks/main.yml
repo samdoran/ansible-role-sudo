@@ -7,7 +7,7 @@
         - "{{ ansible_facts.os_family }}-{{ ansible_facts.distribution_major_version }}.yml"
         - "{{ ansible_facts.distribution }}.yml"
         - "{{ ansible_facts.os_family }}.yml"
-        - default.yml
+        - none.yml
       paths:
         - vars
   tags:
@@ -16,6 +16,12 @@
 - include_tasks: "install-{{ ansible_facts.os_family }}.yml"
   tags:
     - sudo
+
+- name: Create sudo groups
+  group:
+    name: "{{ item.name }}"
+    state: present
+  loop: "{{ sudoers_groups }}"
 
 - name: Configure sudoers file
   lineinfile:
@@ -45,5 +51,8 @@
     group: "{{ _sudo_group | default(sudo_group) }}"
     mode: '0440'
     validate: /usr/sbin/visudo -cf %s
+  when: >
+    sudo_users | length > 0 or
+    sudo_groups | length > 0
   tags:
     - sudo

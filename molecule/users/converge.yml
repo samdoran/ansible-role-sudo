@@ -1,0 +1,37 @@
+- hosts: all
+  become: yes
+
+  vars:
+    sudo_users:
+      - name: test1
+        group: wheel
+        options: 'ALL=(ALL) ALL'
+
+      - name: test2
+        group: admin
+
+    sudo_groups:
+      - name: wheel
+      - name: admin
+      - name: testgroup
+        options: 'ALL=(ALL) ALL'
+
+  tasks:
+    - debug:
+        msg: >-
+          Testing with Ansible {{ ansible_version.full }} using Python {{ ansible_facts.python_version }}
+          on {{ ansible_facts.distribution }} {{ ansible_facts.distribution_version }}
+
+    - name: Create groups
+      group:
+        name: "{{ item.name }}"
+      loop: "{{ sudo_groups }}"
+
+    - name: Create test users
+      user:
+        name: "{{ item.name }}"
+        group: "{{ item.group }}"
+      loop: "{{ sudo_users }}"
+
+    - import_role:
+        name: sudo

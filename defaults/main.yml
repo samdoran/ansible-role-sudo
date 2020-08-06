@@ -14,3 +14,12 @@ sudo_sudoers_lines:
   # Read files from sudoers.d
   - regexp: '^#includedir.*'
     line: '#includedir {{ sudo_sudoers_d_path }}'
+
+sudo_users: []
+# - name: user
+#   options: 'ALL=(ALL) ALL'
+
+sudo_groups: []
+# - name: sudoers
+#   options: 'ALL=(ALL) ALL'
+# - name: wheel

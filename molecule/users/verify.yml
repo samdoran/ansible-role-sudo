@@ -19,8 +19,15 @@
         - "{{ sudo_sudoers_path }}"
         - "{{ sudo_sudoers_d_path }}"
 
+    - name: Ensure sudoers.d file was created properly
+      copy:
+        src: files/sudoers.d_check
+        dest: "{{ sudo_sudoers_d_path }}/ansible"
+      register: sudoers_template_check
+
     - assert:
         that:
           - "'!requiretty' in sudo_out.stdout"
           - (sudoers_files.results | map(attribute='stat') | map(attribute='pw_name') | unique | list)[0] == sudo_owner
           - (sudoers_files.results | map(attribute='stat') | map(attribute='gr_name') | unique | list)[0] == sudo_group
+          - sudoers_template_check is not changed

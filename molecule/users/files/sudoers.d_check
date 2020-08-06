@@ -1,0 +1,5 @@
+test1 ALL=(ALL) ALL
+test2 ALL=(ALL) NOPASSWD: ALL
+%wheel ALL=(ALL) NOPASSWD: ALL
+%admin ALL=(ALL) NOPASSWD: ALL
+%testgroup ALL=(ALL) ALL
