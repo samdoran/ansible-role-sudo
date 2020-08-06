@@ -18,10 +18,9 @@ galaxy_info:
         - trusty
         - xenial
 
-    - name: Debian
+    - name: macOS
       versions:
-        - stretch
-        - jessie
+        - all
 
   galaxy_tags:
     - system
