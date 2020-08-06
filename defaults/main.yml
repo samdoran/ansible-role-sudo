@@ -4,6 +4,7 @@ sudo_group: root
 sudo_default_options: 'ALL=(ALL) NOPASSWD: ALL'
 sudo_sudoers_path: /etc/sudoers
 sudo_sudoers_d_path: /etc/sudoers.d
+sudo_create_groups: yes
 
 sudo_sudoers_lines:
   # Do not require a TTY, which allows Ansible to use ssh pipelining for

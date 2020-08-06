@@ -24,6 +24,7 @@ Role Variables
 | `sudo_sudoers_lines` | `[see defaults/main.yml]` | Lines to insert in `/etc/sudoers`. By default, the lines inserted disable the requirement for a TTY and ensure the `sudo_sudoers_d_path` is read. |
 | `sudo_users` | `[]` | List of users and their `sudo` options. If no `options` are specifid, `sudo_default_options` will be used. See `defaults/main.yml` for examples. |
 | `sudo_groups` | `[]` | List of groups and their `sudo` options. If no `options` are specifid, `sudo_default_options` will be used. If the group does not exist, it will be created. See ` defaults/main.yml` for examples. |
+| `sudo_create_groups` | `yes` | Whether or not to create `sudo_groups`. |
 
 
 Dependencies
