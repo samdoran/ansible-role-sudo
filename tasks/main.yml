@@ -22,6 +22,8 @@
     name: "{{ item.name }}"
     state: present
   loop: "{{ sudo_groups }}"
+  tags:
+    - sudo
 
 - name: Configure sudoers file
   lineinfile:
@@ -31,6 +33,7 @@
     validate: visudo -cf %s
   loop: "{{ sudo_sudoers_lines }}"
   tags:
+    - sudo
     - sudoers
 
 - name: Make sure {{ sudo_sudoers_d_path }} exists
