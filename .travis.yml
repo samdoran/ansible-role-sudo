@@ -21,7 +21,7 @@ env:
     - MOLECULE_DISTRIBUTION: fedora31
 
 install:
-  - pip install molecule[lint]==3.0.6 docker
+  - pip install molecule[lint]==3.0.6 docker==4.2.2
 
 before_script:
   # Remove "ansible-role-" prefix from role name
