@@ -13,8 +13,8 @@ sudo_sudoers_lines:
     line: 'Defaults    !requiretty'
 
   # Read files from sudoers.d
-  - regexp: '^#includedir.*'
-    line: '#includedir {{ sudo_sudoers_d_path }}'
+  - regexp: '^\([#@]\)includedir.*'
+    line: '\1includedir {{ sudo_sudoers_d_path }}'
 
 sudo_users: []
 # - name: user

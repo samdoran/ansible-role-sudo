@@ -30,6 +30,7 @@
     dest: "{{ sudo_sudoers_path }}"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
+    backrefs: yes
     validate: visudo -cf %s
   loop: "{{ sudo_sudoers_lines }}"
   tags:
