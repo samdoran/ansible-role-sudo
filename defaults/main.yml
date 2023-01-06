@@ -9,11 +9,11 @@ sudo_create_groups: yes
 sudo_sudoers_lines:
   # Do not require a TTY, which allows Ansible to use ssh pipelining for
   # improved performance
-  - regexp: '^#?Defaults.*requiretty'
+  - regexp: '^[# ]*?Defaults.*requiretty'
     line: 'Defaults    !requiretty'
 
   # Read files from sudoers.d
-  - regexp: '^\([#@]\)includedir.*'
+  - regexp: '^([#@])includedir.*'
     line: '\1includedir {{ sudo_sudoers_d_path }}'
 
 sudo_users: []
