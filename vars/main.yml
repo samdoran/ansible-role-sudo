@@ -1,0 +1,4 @@
+_sudo_validate_command: "{{ omit if ansible_facts.distribution in _sudo_skip_validate else '/usr/sbin/visudo -cf %s' }}"
+
+_sudo_skip_validate:
+  - OtherLinux

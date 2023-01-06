@@ -14,6 +14,7 @@
     - sudo
 
 - include_tasks: "install-{{ ansible_facts.os_family }}.yml"
+  when: ansible_facts.pkg_mgr != 'unknown'
   tags:
     - sudo
 
@@ -32,7 +33,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     backrefs: yes
-    validate: visudo -cf %s
+    validate: "{{ _sudo_validate_command }}"
   loop: "{{ sudo_sudoers_lines }}"
   tags:
     - sudo
@@ -55,9 +56,7 @@
     owner: "{{ sudo_owner }}"
     group: "{{ _sudo_group | default(sudo_group) }}"
     mode: '0440'
-    validate: /usr/sbin/visudo -cf %s
-  when: >
-    sudo_users | length > 0 or
-    sudo_groups | length > 0
+    validate: "{{ _sudo_validate_command }}"
+  when: (sudo_users + sudo_groups) | length > 0
   tags:
     - sudo
